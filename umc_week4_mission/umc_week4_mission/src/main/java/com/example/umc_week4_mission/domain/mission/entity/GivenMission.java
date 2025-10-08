@@ -1,32 +1,28 @@
-import com.example.demo.domain.BaseEntity;
-import com.example.demo.domain.mission.entity.Mission;
-import com.example.demo.domain.user.entity.User;
+package com.example.missionapp.domain.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "given_mission")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class GivenMission extends BaseEntity {
+@Builder
+public class GivenMission {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "given_mission_id")
-    private Long id;
+    @EmbeddedId
+    private GivenMissionId id;
 
-    @Column(name = "is_complete", nullable = false)
-    @Builder.Default
-    private Boolean isComplete = false;
-
-    // Mission과의 단방향 매핑
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mission_id", nullable = false)
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("missionId")
+    @JoinColumn(name = "mission_id")
     private Mission mission;
 
-    // User와의 단방향 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Boolean isComplete;
 }

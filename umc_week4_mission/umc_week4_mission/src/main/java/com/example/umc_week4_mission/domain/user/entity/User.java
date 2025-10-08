@@ -1,47 +1,34 @@
-package com.example.umc_week4_mission.domain.user.entity;
+package com.example.missionapp.domain.entity;
 
-import com.example.demo.domain.BaseEntity;
-import com.example.demo.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
+@Table(name = "user")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class User extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(nullable = false, length = 30)
     private String name;
 
-    @Column(length = 10, nullable = false)
-    private String password;
-
-    @Column(length = 11, nullable = true)
+    @Column(length = 20)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Gender gender = Gender.NONE;
+    @Column(nullable = false)
+    private String password;
 
-    @Column(columnDefinition = "INT default 0")
-    @Builder.Default
-    private Integer clearMissionCount = 0;
+    private Integer point;
 
-    @Column(columnDefinition = "INT default 0")
-    @Builder.Default
-    private Integer point = 0;
-
-    // Review와의 양방향 매핑
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<GivenMission> givenMissions = new ArrayList<>();
 }

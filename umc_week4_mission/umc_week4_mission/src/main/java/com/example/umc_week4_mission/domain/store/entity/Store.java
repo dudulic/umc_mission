@@ -1,34 +1,26 @@
-import com.example.demo.domain.BaseEntity;
-import com.example.demo.domain.mission.entity.Mission;
-import com.example.demo.domain.review.entity.Review;
+package com.example.missionapp.domain.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
+@Table(name = "store")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Store extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "store_name", nullable = false)
-    private String name;
-
     @Column(nullable = false)
-    private String type;
+    private String storeName;
 
-    // Review와의 양방향 매핑
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<Review> reviews = new ArrayList<>();
-
-    // Mission과의 양방향 매핑
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store")
     private List<Mission> missions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviews = new ArrayList<>();
 }

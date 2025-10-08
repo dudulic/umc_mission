@@ -1,7 +1,6 @@
-import com.example.demo.domain.user.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+package com.example.missionapp.domain.repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-}
+import com.example.missionapp.domain.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<Member, Long> {}

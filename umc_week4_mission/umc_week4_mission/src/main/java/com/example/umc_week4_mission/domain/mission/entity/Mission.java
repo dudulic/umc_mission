@@ -1,28 +1,32 @@
-import com.example.demo.domain.BaseEntity;
-import com.example.demo.domain.store.entity.Store;
+package com.example.missionapp.domain.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.*;
 
 @Entity
+@Table(name = "mission")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Mission extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "mission_id")
     private Long id;
 
-    @Column(name = "success_criteria", length = 255, nullable = false)
-    private String successCriteria;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 
-    @Column(name = "how_to", length = 255, nullable = false)
+    @Column(length = 200)
     private String howTo;
 
-    // Store와의 단방향 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false)
-    private Store store;
+    private String field;
+
+    @OneToMany(mappedBy = "mission")
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "mission")
+    private List<GivenMission> givenMissions = new ArrayList<>();
 }

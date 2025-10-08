@@ -1,31 +1,31 @@
-import com.example.demo.domain.BaseEntity;
-import com.example.demo.domain.store.entity.Store;
-import com.example.demo.domain.user.entity.User;
+package com.example.missionapp.domain.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "review")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Review extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
     private Long id;
 
-    @Column(length = 255, nullable = false)
-    private String field;
-
-    // User와의 단방향 매핑
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "mission_id")
+    private Mission mission;
 
-    // Store와의 단방향 매핑
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false)
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
     private Store store;
+
+    @Column(length = 1000)
+    private String content;
 }
