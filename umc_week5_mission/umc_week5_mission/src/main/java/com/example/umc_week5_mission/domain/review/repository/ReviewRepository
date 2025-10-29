@@ -1,0 +1,9 @@
+
+package com.example.demo.repository;
+
+import com.example.demo.domain.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    // save() 메서드는 JpaRepository가 이미 가지고 있습니다.
+}
